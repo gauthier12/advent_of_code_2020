@@ -64,9 +64,7 @@ fn check_passport(passport: &Passeport) -> bool {
             "oth" => {}
             _ => return false,
         }
-    }
-    else 
-    {
+    } else {
         return false;
     }
     //hgt (Height) - a number followed by either cm or in:
@@ -101,9 +99,7 @@ fn check_passport(passport: &Passeport) -> bool {
         if !re_string.is_match(hcl_string.as_ref()) {
             return false;
         }
-    }
-    else 
-    {
+    } else {
         return false;
     }
     //pid (Passport ID) - a nine-digit number, including leading zeroes.
@@ -116,13 +112,10 @@ fn check_passport(passport: &Passeport) -> bool {
                 return false;
             }
         }
-    }
-    else 
-    {
+    } else {
         return false;
     }
     //cid (Country ID) - ignored, missing or not.
-
     true
 }
 
@@ -185,7 +178,10 @@ fn main() {
         passport_db.push(cur_passport);
     }
     //num_valid += check_passport(&cur_passport) as u32;
-    let num_valid: u8 = passport_db.par_iter().map(|cp| check_passport(cp) as u8).sum();
+    let num_valid: u8 = passport_db
+        .par_iter()
+        .map(|cp| check_passport(cp) as u8)
+        .sum();
     println!("Number of valid passport : {:?}", num_valid);
     let duration = start.elapsed();
     println!("Time elapsed in total is: {:?}", duration);
