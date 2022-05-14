@@ -1,4 +1,3 @@
-extern crate ndarray;
 #[macro_use]
 extern crate scan_fmt;
 extern crate regex;
@@ -55,13 +54,7 @@ fn check_passport(passport: &Passeport) -> bool {
     //ecl (Eye Color) - exactly one of: amb blu brn gry grn hzl oth.
     if let Some(ecl_string) = &passport.ecl {
         match ecl_string.as_ref() {
-            "amb" => {}
-            "blu" => {}
-            "brn" => {}
-            "gry" => {}
-            "grn" => {}
-            "hzl" => {}
-            "oth" => {}
+            "amb" | "blu" | "brn" | "gry" | "grn" | "hzl" | "oth" => {}
             _ => return false,
         }
     } else {
@@ -132,11 +125,7 @@ fn main() {
     for line in contents.lines() {
         if line.split_whitespace().count() > 0 {
             for s in line.split_whitespace() {
-                if let Ok((str1, str2)) = scan_fmt!(
-                    s,       // input string
-                    "{}:{}", // format
-                    String, String
-                ) {
+                if let Ok((str1, str2)) = scan_fmt!(s, "{}:{}", String, String) {
                     match str1.as_ref() {
                         "byr" => {
                             cur_passport.byr =
